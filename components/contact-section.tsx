@@ -16,14 +16,38 @@ export default function ContactSection() {
     message: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 3000);
-    setFormData({ name: "", email: "", message: "" });
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setTimeout(() => setIsSubmitted(false), 5000);
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setError(result.error || 'Failed to send message');
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      setError('Failed to send message. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (
@@ -104,6 +128,12 @@ export default function ContactSection() {
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {error && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                    {error}
+                  </div>
+                )}
+
                 <div>
                   <Input
                     type="text"
@@ -112,6 +142,7 @@ export default function ContactSection() {
                     value={formData.name}
                     onChange={handleChange}
                     required
+                    disabled={isLoading}
                     className="w-full"
                   />
                 </div>
@@ -124,6 +155,7 @@ export default function ContactSection() {
                     value={formData.email}
                     onChange={handleChange}
                     required
+                    disabled={isLoading}
                     className="w-full"
                   />
                 </div>
@@ -136,16 +168,27 @@ export default function ContactSection() {
                     onChange={handleChange}
                     required
                     rows={5}
+                    disabled={isLoading}
                     className="w-full resize-none"
                   />
                 </div>
 
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  disabled={isLoading}
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  Send Message
-                  <Send className="ml-2 h-4 w-4" />
+                  {isLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <Send className="ml-2 h-4 w-4" />
+                    </>
+                  )}
                 </Button>
               </form>
             )}
