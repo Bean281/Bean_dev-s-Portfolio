@@ -4,7 +4,7 @@ import type React from "react";
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Github, Send, CheckCircle, Instagram } from "lucide-react";
+import { Mail, Github, Send, CheckCircle, Instagram, Download, FileText, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -234,8 +234,59 @@ export default function ContactSection() {
               ))}
             </div>
 
+            {/* CV/Resume Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-xl shadow-lg border border-purple-100 p-6"
+            >
+              <div className="flex items-center space-x-3 mb-4">
+                <FileText className="w-6 h-6 text-purple-600" />
+                <h4 className="text-lg font-semibold text-gray-900">My Resume</h4>
+              </div>
+              <p className="text-gray-600 text-sm mb-6">
+                Download my latest resume to know more about my experience and skills.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-3">
+                {/* View CV Button */}
+                <Button
+                  asChild
+                  variant="outline"
+                  className="flex-1 border-2 border-purple-600 text-purple-600 hover:bg-purple-50 transition-all duration-300 transform hover:scale-105"
+                >
+                  <a 
+                    href="/BeanNguyen_Resume.pdf" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center"
+                  >
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    View CV
+                  </a>
+                </Button>
+
+                {/* Download CV Button */}
+                <Button
+                  asChild
+                  className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                >
+                  <a 
+                    href="/BeanNguyen_Resume.pdf" 
+                    download="BeanNguyen_Resume.pdf"
+                    className="flex items-center justify-center"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Download CV
+                  </a>
+                </Button>
+              </div>
+            </motion.div>
+
             {/* Additional Info */}
-            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6 border border-purple-200">
+            {/* <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6 border border-purple-200">
               <h4 className="font-semibold text-gray-900 mb-2">
                 Quick Response
               </h4>
@@ -244,7 +295,7 @@ export default function ContactSection() {
                 matters, feel free to reach out on Instagram.
               </p><br/>
               <p className="text-gray-600 text-sm">Email: ndthung281@gmail.com</p>
-            </div>
+            </div> */}
           </motion.div>
         </div>
       </div>
