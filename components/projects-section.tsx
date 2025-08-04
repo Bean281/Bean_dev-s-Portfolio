@@ -12,6 +12,7 @@ import resultsummarycomponent from "@/app/image/resultsummarycomponent.webp";
 import weatherforecast from "@/app/image/weatherforecast.png";
 import financialmanagement from "@/app/image/financialmanagement.png";
 import realestatelandingpage from "@/app/image/realestatelandingpage.png";
+import lanternStoreEcommerce from "@/app/image/lantern-store-ecommerce.png";
 
 export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState("All");
@@ -51,6 +52,26 @@ export default function ProjectsSection() {
       category: "Web App",
       liveUrl: "https://budget-buddy-bean.vercel.app/login",
       githubUrl: "https://github.com/Bean281/budget_buddy-frontend",
+    },
+    {
+      title: "Lantern Store Ecommerce",
+      description:
+        "A real-life eCommerce website for selling lanterns, featuring admin tools for managing products and orders. Users can place and track orders using their phone numbers without needing to log in.",
+      image: lanternStoreEcommerce,
+      technologies: [
+        "Full-stack",
+        "Next.js",
+        "NestJS",
+        "Prisma",
+        "API Integration",
+        "MongoDB Atlass",
+        "AWS S3",
+        "Tailwind CSS",
+        "TypeScript",
+      ],
+      category: "Web App",
+      liveUrl: "https://longdentruyenthong.vercel.app",
+      githubUrl: "https://github.com/Bean281/lantern-store-frontend",
     },
     {
       title: "Agency Landing Page",
